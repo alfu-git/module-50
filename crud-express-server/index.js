@@ -3,7 +3,7 @@ dns.setServers(["8.8.8.8", "8.8.4.4"]);
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const port = process.env.PORT || 5000;
 
 // middleware
@@ -31,6 +31,15 @@ const run = async () => {
       const cursor = usersCollection.find();
       const result = await cursor.toArray();
       res.send(result);
+    });
+
+    app.get("/users/:userId", async (req, res) => {
+      const userId = req.params.userId;
+      const query = {
+        _id: new ObjectId(userId),
+      };
+      const user = await usersCollection.findOne(query);
+      res.send(user);
     });
 
     await client.db("admin").command({ ping: 1 });

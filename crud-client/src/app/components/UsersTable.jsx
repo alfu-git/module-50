@@ -1,12 +1,12 @@
 import { Button, Table } from "@heroui/react";
+import Link from "next/link";
 import React from "react";
 
 const UsersTable = ({ users }) => {
-  console.log(users);
   return (
     <Table>
       <Table.ScrollContainer>
-        <Table.Content aria-label="Team members" className="min-w-[600px]">
+        <Table.Content aria-label="Team members" className="min-w-150">
           <Table.Header>
             <Table.Column isRowHeader>Name</Table.Column>
             <Table.Column>Role</Table.Column>
@@ -22,7 +22,9 @@ const UsersTable = ({ users }) => {
                 <Table.Cell>{user.email}</Table.Cell>
 
                 <Table.Cell className={"flex flex-wrap gap-4"}>
+                  <Link href={`/users/${user._id}`}>
                   <Button variant="outline">Details</Button>
+                  </Link>
 
                   <Button>Edit</Button>
 
