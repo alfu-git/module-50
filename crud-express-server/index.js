@@ -45,11 +45,17 @@ const run = async () => {
     app.delete("/users/:userId", async (req, res) => {
       const userId = req.params.userId;
       const query = {
-        _id: new ObjectId(userId)
-      }
+        _id: new ObjectId(userId),
+      };
       const result = await usersCollection.deleteOne(query);
       res.send(result);
-    })
+    });
+
+    app.post("/users", async (req, res) => {
+      const newUser = req.body;
+      const result = await usersCollection.insertOne(newUser);
+      res.send(result);
+    });
 
     await client.db("admin").command({ ping: 1 });
     console.log(
