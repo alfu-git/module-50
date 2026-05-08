@@ -1,6 +1,7 @@
 import React from "react";
 import { getUsers } from "../lib/data";
 import UsersTable from "../components/UsersTable";
+import { deleteUser } from "../lib/actions";
 
 const UsersPage = async () => {
   const users = await getUsers();
@@ -13,7 +14,7 @@ const UsersPage = async () => {
         </h2>
 
         <div>
-          <UsersTable users={users} />
+          <UsersTable users={users} deleteUser={deleteUser} />
         </div>
       </div>
     </section>

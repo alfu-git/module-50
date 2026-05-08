@@ -1,8 +1,13 @@
-import { Button, Table } from "@heroui/react";
+"use client";
+import { AlertDialog, Button, Table } from "@heroui/react";
 import Link from "next/link";
 import React from "react";
 
-const UsersTable = ({ users }) => {
+const UsersTable = ({ users, deleteUser }) => {
+  const handleUserDelete = async (userId) => {
+    await deleteUser(userId);
+  };
+
   return (
     <Table>
       <Table.ScrollContainer>
@@ -23,12 +28,49 @@ const UsersTable = ({ users }) => {
 
                 <Table.Cell className={"flex flex-wrap gap-4"}>
                   <Link href={`/users/${user._id}`}>
-                  <Button variant="outline">Details</Button>
+                    <Button variant="outline">Details</Button>
                   </Link>
 
                   <Button>Edit</Button>
 
-                  <Button variant="danger">Delete</Button>
+                  <AlertDialog>
+                    <Button variant="danger">Delete</Button>
+                    <AlertDialog.Backdrop>
+                      <AlertDialog.Container>
+                        <AlertDialog.Dialog className="sm:max-w-100">
+                          <AlertDialog.CloseTrigger />
+                          <AlertDialog.Header>
+                            <AlertDialog.Icon status="danger" />
+                            <AlertDialog.Heading>
+                              Delete project permanently?
+                            </AlertDialog.Heading>
+                          </AlertDialog.Header>
+
+                          <AlertDialog.Body>
+                            <p>
+                              This will permanently delete{" "}
+                              <strong>My Awesome Project</strong> and all of its
+                              data. This action cannot be undone.
+                            </p>
+                          </AlertDialog.Body>
+
+                          <AlertDialog.Footer>
+                            <Button slot="close" variant="tertiary">
+                              Cancel
+                            </Button>
+
+                            <Button
+                              onClick={() => handleUserDelete(user._id)}
+                              slot="close"
+                              variant="danger"
+                            >
+                              Confirm Delete
+                            </Button>
+                          </AlertDialog.Footer>
+                        </AlertDialog.Dialog>
+                      </AlertDialog.Container>
+                    </AlertDialog.Backdrop>
+                  </AlertDialog>
                 </Table.Cell>
               </Table.Row>
             ))}
