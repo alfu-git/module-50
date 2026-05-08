@@ -31,7 +31,9 @@ const UsersTable = ({ users, deleteUser }) => {
                     <Button variant="outline">Details</Button>
                   </Link>
 
-                  <Button>Edit</Button>
+                  <Link href={`/users/${user._id}/edit`}>
+                    <Button>Edit</Button>
+                  </Link>
 
                   <AlertDialog>
                     <Button variant="danger">Delete</Button>
